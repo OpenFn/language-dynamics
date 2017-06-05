@@ -1,5 +1,4 @@
 import { execute as commonExecute, expandReferences } from 'language-common';
-import { getThenPost, clientPost } from './Client';
 import request from 'request';
 import { resolve as resolveUrl } from 'url';
 
@@ -30,11 +29,47 @@ export function execute(...operations) {
 }
 
 
-// export function somethingDynamic(params) {
-//
-//   return state => {};
-//
-// };
+export function createEntity(params) {
+
+  return state => {
+
+    const { baseUrl, accessToken } = state.configuration;
+
+    const { entityName, body } = expandReferences(params);
+
+    const url = baseUrl.concat(entityName);
+    console.log(url);
+
+    const headers = {
+      'OData-MaxVersion': '4.0',
+      'OData-Version': '4.0',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '.concat(accessToken)
+    };
+    console.log(headers);
+
+    return new Promise((resolve, reject) => {
+      request.post ({
+        url: url,
+        json: body,
+        headers
+      }, function(error, response, body){
+        if(error) {
+          reject(error);
+        } else {
+          console.log("Create entity succeeded.");
+          resolve(body);
+        }
+      })
+    }).then((data) => {
+      const nextState = { ...state, response: { body: data } };
+      if (callback) return callback(nextState);
+      return nextState;
+    })
+
+  };
+
+};
 
 export {
   field, fields, sourceValue, alterState, each,
