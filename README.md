@@ -73,6 +73,14 @@ updateEntity({
 });
 ```
 
+#### sample delete expression
+```js
+deleteEntity({
+  entityName: "accounts",
+  entityId: "aeef941b-254a-e711-80f1-e0071b685921"
+});
+```
+
 [Docs](docs/index)
 
 

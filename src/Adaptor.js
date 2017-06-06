@@ -163,7 +163,7 @@ export function updateEntity(params) {
 
     const { entityName, entityId, body } = expandReferences(params)(state);
 
-    const url = baseUrl + entityName + "(" + entityId + ")";
+    const url = `${baseUrl}${entityName}(${entityId})`;
 
     const headers = {
       'OData-MaxVersion': '4.0',
@@ -187,6 +187,55 @@ export function updateEntity(params) {
           reject(error);
         } else {
           console.log("Update succeeded.");
+          console.log(response)
+          resolve(body);
+        }
+      })
+    }).then((data) => {
+      const nextState = { ...state, response: { body: data } };
+      if (callback) return callback(nextState);
+      return nextState;
+    })
+
+  };
+
+};
+
+export function deleteEntity(params) {
+
+  return state => {
+
+    function assembleError({ response, error }) {
+      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (error) return error;
+      return new Error(`Server responded with ${response.statusCode}`)
+    }
+
+    const { baseUrl, accessToken } = state.configuration;
+
+    const { entityName, entityId } = expandReferences(params)(state);
+
+    const url = `${baseUrl}${entityName}(${entityId})`;
+
+    const headers = {
+      'OData-MaxVersion': '4.0',
+      'OData-Version': '4.0',
+      'Content-Type': 'application/json',
+      'Authorization': accessToken
+    };
+
+    console.log("Posting to url: " + url);
+
+    return new Promise((resolve, reject) => {
+      request.delete ({
+        url: url,
+        headers
+      }, function(error, response, body){
+        error = assembleError({error, response})
+        if(error) {
+          reject(error);
+        } else {
+          console.log("Delete succeeded.");
           console.log(response)
           resolve(body);
         }
