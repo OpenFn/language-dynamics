@@ -92,26 +92,38 @@ export function query(params) {
     }
 
     const { baseUrl, accessToken } = state.configuration;
-
-    const { entityName, query } = expandReferences(params)(state);
+    const { entityName, entityId, query } = expandReferences(params)(state);
 
     const url = baseUrl.concat(entityName);
 
-    const selectors = "?$select=".concat(query.fields.join(','));
+    const urlId = ( entityId ? `${url}(${entityId})` : url );
 
-    const orderBy = "$orderby=" + query.orderBy.field + ' ' + query.orderBy.direction;
+    // TODO: find a better way of running these ternaries.
+    // Here we initialize an empty object if no query is present.
+    const ternaryQuery = query || {};
 
-    const fullUrl = url + selectors + ",&" + orderBy;
+    const selectors = ( ternaryQuery.fields ? `$select=${query.fields.join(',')}` : null );
+    const orderBy = ( ternaryQuery.orderBy ? `$orderby=${query.orderBy.field} ${query.orderBy.direction}` : null );
+    const filter = ( ternaryQuery.filter ? `$filter=${query.filter}` : null );
+    const limit = ( ternaryQuery.limit ?  query.limit : 0 );
+
+    const queryUrl = [selectors, orderBy, filter]
+                      .filter( i => {
+                        return i != null
+                      })
+                      .join('&');
+
+    const fullUrl = ( queryUrl ? `${urlId}?${queryUrl}` : urlId );
+
+    console.log("Full URL: " + fullUrl);
 
     const headers = {
       'OData-MaxVersion': '4.0',
       'OData-Version': '4.0',
       'Content-Type': 'application/json',
       'Authorization': accessToken,
-      'Prefer': 'odata.maxpagesize=' + query.limit
+      'Prefer': 'odata.maxpagesize=' + limit
     };
-
-    console.log("Posting to url: " + fullUrl);
 
     return new Promise((resolve, reject) => {
       request.get ({
@@ -122,8 +134,60 @@ export function query(params) {
         if(error) {
           reject(error);
         } else {
-          console.log("Create entity succeeded.");
+          console.log("Query succeeded.");
           console.log(body)
+          resolve(body);
+        }
+      })
+    }).then((data) => {
+      const nextState = { ...state, response: { body: data } };
+      if (callback) return callback(nextState);
+      return nextState;
+    })
+
+  };
+
+};
+
+export function updateEntity(params) {
+
+  return state => {
+
+    function assembleError({ response, error }) {
+      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (error) return error;
+      return new Error(`Server responded with ${response.statusCode}`)
+    }
+
+    const { baseUrl, accessToken } = state.configuration;
+
+    const { entityName, entityId, body } = expandReferences(params)(state);
+
+    const url = baseUrl + entityName + "(" + entityId + ")";
+
+    const headers = {
+      'OData-MaxVersion': '4.0',
+      'OData-Version': '4.0',
+      'Content-Type': 'application/json',
+      'Authorization': accessToken
+    };
+
+    console.log("Posting to url: " + url);
+    console.log("With body: " + JSON.stringify(body, null, 2));
+
+
+    return new Promise((resolve, reject) => {
+      request.patch ({
+        url: url,
+        json: body,
+        headers
+      }, function(error, response, body){
+        error = assembleError({error, response})
+        if(error) {
+          reject(error);
+        } else {
+          console.log("Update succeeded.");
+          console.log(response)
           resolve(body);
         }
       })

@@ -37,19 +37,38 @@ createEntity({
 ```
 
 #### sample query expression
+*Can be used to retrieve or query a specific Entity if an entityId is declared in the expression. Otherwise it will perform a query on all data with the defined Entity Name*
 ```js
 query({
   entityName: "contacts",
+  entityId: "51a0e5b9-88df-e311-b8e5-6c3be5a8b200",
   query: {
     fields: [
       'fullname',
       'birthdate'
     ],
-    limit: 5,
+   limit: 10,
     orderBy: {
-      field: 'fullname',
+      field: 'lastname',
       direction: 'asc'
-    }
+    },
+    filter: 'firstname eq \'Cat\''
+  }
+});
+```
+
+#### sample update expression
+```js
+updateEntity({
+  entityName: "accounts",
+  entityId: "f4301865-c64a-e711-80f3-e0071b6fd061",
+  body: {
+        "name": "wilder 2",
+        "creditonhold": true,
+        "address1_latitude": 47.639583,
+        "description": "This is the description of the sample account",
+        "revenue": 5000000,
+        "accountcategorycode": 1
   }
 });
 ```
