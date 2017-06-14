@@ -42,7 +42,7 @@ describe("execute", () => {
   })
 })
 
-describe("get", () => {
+describe("createEntity", () => {
 
   before(() => {
      nock('https://play.http.org')

@@ -5,7 +5,6 @@ Language Pack for building expressions and operations to make calls to the Micro
 
 Documentation
 -------------
-## somethingDynamic
 
 #### sample configuration
 *Dynamics uses oauth2. The language-package will expect to be given a valid oauth token.
