@@ -39,11 +39,11 @@ export function createEntity(params) {
       return new Error(`Server responded with ${response.statusCode}`)
     }
 
-    const { baseUrl, accessToken } = state.configuration;
+    const { resource, accessToken, apiVersion } = state.configuration;
 
     const { entityName, body } = expandReferences(params)(state);
 
-    const url = baseUrl.concat(entityName);
+    const url = `${resource}/api/data/v${apiVersion}/${entityName}`;
 
     const headers = {
       'OData-MaxVersion': '4.0',
@@ -91,10 +91,10 @@ export function query(params) {
       return new Error(`Server responded with ${response.statusCode}`)
     }
 
-    const { baseUrl, accessToken } = state.configuration;
+    const { resource, accessToken, apiVersion } = state.configuration;
     const { entityName, entityId, query } = expandReferences(params)(state);
 
-    const url = baseUrl.concat(entityName);
+    const url = `${resource}/api/data/v${apiVersion}/${entityName}`;
 
     const urlId = ( entityId ? `${url}(${entityId})` : url );
 
@@ -159,11 +159,11 @@ export function updateEntity(params) {
       return new Error(`Server responded with ${response.statusCode}`)
     }
 
-    const { baseUrl, accessToken } = state.configuration;
+    const { resource, accessToken, apiVersion } = state.configuration;
 
     const { entityName, entityId, body } = expandReferences(params)(state);
 
-    const url = `${baseUrl}${entityName}(${entityId})`;
+    const url = `${resource}/api/data/v${apiVersion}/${entityName}(${entityId})`;
 
     const headers = {
       'OData-MaxVersion': '4.0',
@@ -211,11 +211,11 @@ export function deleteEntity(params) {
       return new Error(`Server responded with ${response.statusCode}`)
     }
 
-    const { baseUrl, accessToken } = state.configuration;
+    const { resource, accessToken, apiVersion } = state.configuration;
 
     const { entityName, entityId } = expandReferences(params)(state);
 
-    const url = `${baseUrl}${entityName}(${entityId})`;
+    const url = `${resource}/api/data/v${apiVersion}/${entityName}(${entityId})`;
 
     const headers = {
       'OData-MaxVersion': '4.0',

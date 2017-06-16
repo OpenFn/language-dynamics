@@ -13,7 +13,7 @@ On OpenFn.org, the `CredentialService` is responsible for making sure the the oa
 ```js
 {
   "configuration": {
-    "baseUrl": "https://openfn.crm2.dynamics.com/",
+    "baseUrl": "https://openfn.crm2.dynamics.com",
     "apiVersion": "8.2",
     "accessToken": "Bearer blahblah"
   }
