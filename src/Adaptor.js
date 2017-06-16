@@ -34,7 +34,7 @@ export function createEntity(params) {
   return state => {
 
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && ([200,201,202,204].indexOf(response.statusCode) > -1)) return false;
       if (error) return error;
       return new Error(`Server responded with ${response.statusCode}`)
     }
@@ -62,12 +62,12 @@ export function createEntity(params) {
         json: body,
         headers
       }, function(error, response, body){
-        error = assembleError({error, response})
+        error = assembleError({response, error})
         if(error) {
           reject(error);
         } else {
           console.log("Create entity succeeded.");
-          console.log(response)
+          console.log(body)
           resolve(body);
         }
       })
@@ -86,7 +86,7 @@ export function query(params) {
   return state => {
 
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && ([200,201,202,204].indexOf(response.statusCode) > -1)) return false;
       if (error) return error;
       return new Error(`Server responded with ${response.statusCode}`)
     }
@@ -130,7 +130,7 @@ export function query(params) {
         url: fullUrl,
         headers
       }, function(error, response, body){
-        error = assembleError({error, response})
+        error = assembleError({response, error})
         if(error) {
           reject(error);
         } else {
@@ -154,7 +154,7 @@ export function updateEntity(params) {
   return state => {
 
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && ([200,201,202,204].indexOf(response.statusCode) > -1)) return false;
       if (error) return error;
       return new Error(`Server responded with ${response.statusCode}`)
     }
@@ -182,12 +182,12 @@ export function updateEntity(params) {
         json: body,
         headers
       }, function(error, response, body){
-        error = assembleError({error, response})
+        error = assembleError({response, error})
         if(error) {
           reject(error);
         } else {
           console.log("Update succeeded.");
-          console.log(response)
+          console.log(body)
           resolve(body);
         }
       })
@@ -206,7 +206,7 @@ export function deleteEntity(params) {
   return state => {
 
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && ([200,201,202,204].indexOf(response.statusCode) > -1)) return false;
       if (error) return error;
       return new Error(`Server responded with ${response.statusCode}`)
     }
@@ -231,12 +231,12 @@ export function deleteEntity(params) {
         url: url,
         headers
       }, function(error, response, body){
-        error = assembleError({error, response})
+        error = assembleError({response, error})
         if(error) {
           reject(error);
         } else {
           console.log("Delete succeeded.");
-          console.log(response)
+          console.log(body)
           resolve(body);
         }
       })

@@ -13,9 +13,9 @@ On OpenFn.org, the `CredentialService` is responsible for making sure the the oa
 ```js
 {
   "configuration": {
-    "baseUrl": "https://openfn.crm2.dynamics.com",
-    "apiVersion": "8.2",
-    "accessToken": "Bearer blahblah"
+    "resource": "https://openfn.crm2.dynamics.com",
+    "apiVersion": "8.2.0",
+    "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
   }
 }
 ```
@@ -25,7 +25,7 @@ On OpenFn.org, the `CredentialService` is responsible for making sure the the oa
 createEntity({
   entityName: "accounts",
   body: {
-        "name": dataValue("name")(state),
+        "name": "Open Function",
         "creditonhold": false,
         "address1_latitude": 47.639583,
         "description": "This is the description of the sample account",
