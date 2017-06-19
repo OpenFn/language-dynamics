@@ -73,7 +73,6 @@ export function createEntity(params) {
       })
     }).then((data) => {
       const nextState = { ...state, response: { body: data } };
-      if (callback) return callback(nextState);
       return nextState;
     })
 
@@ -141,7 +140,6 @@ export function query(params) {
       })
     }).then((data) => {
       const nextState = { ...state, response: { body: data } };
-      if (callback) return callback(nextState);
       return nextState;
     })
 
@@ -193,7 +191,6 @@ export function updateEntity(params) {
       })
     }).then((data) => {
       const nextState = { ...state, response: { body: data } };
-      if (callback) return callback(nextState);
       return nextState;
     })
 
@@ -242,7 +239,6 @@ export function deleteEntity(params) {
       })
     }).then((data) => {
       const nextState = { ...state, response: { body: data } };
-      if (callback) return callback(nextState);
       return nextState;
     })
 
