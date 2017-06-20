@@ -15,6 +15,7 @@ const fixtures = {
       body: {} // find out what Dynamics returns.
     }
   }
+}
 
   export {fixtures};
 

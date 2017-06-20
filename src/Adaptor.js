@@ -67,12 +67,11 @@ export function createEntity(params) {
           reject(error);
         } else {
           console.log("Create entity succeeded.");
-          console.log(body)
-          resolve(body);
+          resolve(response);
         }
       })
     }).then((data) => {
-      const nextState = { ...state, response: { body: data } };
+      const nextState = { ...state, response: {statusCode: data.statusCode, body: data.body } };
       return nextState;
     })
 
@@ -134,12 +133,12 @@ export function query(params) {
           reject(error);
         } else {
           console.log("Query succeeded.");
-          console.log(body)
-          resolve(body);
+          console.log(JSON.parse(body))
+          resolve(response);
         }
       })
     }).then((data) => {
-      const nextState = { ...state, response: { body: data } };
+      const nextState = { ...state, response: {statusCode: data.statusCode, body: data.body } };
       return nextState;
     })
 
@@ -185,12 +184,11 @@ export function updateEntity(params) {
           reject(error);
         } else {
           console.log("Update succeeded.");
-          console.log(body)
-          resolve(body);
+          resolve(response);
         }
       })
     }).then((data) => {
-      const nextState = { ...state, response: { body: data } };
+      const nextState = { ...state, response: {statusCode: data.statusCode, body: data.body } };
       return nextState;
     })
 
@@ -233,12 +231,11 @@ export function deleteEntity(params) {
           reject(error);
         } else {
           console.log("Delete succeeded.");
-          console.log(body)
-          resolve(body);
+          resolve(response);
         }
       })
     }).then((data) => {
-      const nextState = { ...state, response: { body: data } };
+      const nextState = { ...state, response: {statusCode: data.statusCode, body: data.body } };
       return nextState;
     })
 
