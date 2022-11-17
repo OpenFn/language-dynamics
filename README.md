@@ -10,13 +10,12 @@ Documentation
 *Dynamics uses oauth2. The language-package will expect to be given a valid oauth token.
 If a valid token is not provided, it will fail.
 On OpenFn.org, the `CredentialService` is responsible for making sure the the oauth token is valid each time it assembles state to hand to `execute`.*
-```js
+
+```json
 {
-  "configuration": {
-    "resource": "https://openfn.crm2.dynamics.com",
-    "apiVersion": "8.2.0",
-    "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
-  }
+  "resource": "https://openfn.crm2.dynamics.com",
+  "apiVersion": "8.2.0",
+  "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
 }
 ```
 
