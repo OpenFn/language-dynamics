@@ -1,4 +1,9 @@
-Language Dynamics [![Build Status](https://travis-ci.org/OpenFn/language-dynamics.svg?branch=master)](https://travis-ci.org/OpenFn/language-dynamics)
+# _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
+
+**N.B.: New versions are available at:
+https://github.com/OpenFn/adaptors/tree/main/packages/dynamics**
+
+# Language Dynamics (Archived) [![Build Status](https://travis-ci.org/OpenFn/language-dynamics.svg?branch=master)](https://travis-ci.org/OpenFn/language-dynamics)
 =============
 
 Language Pack for building expressions and operations to make calls to the Microsoft Dynamics API.
